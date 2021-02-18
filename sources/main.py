@@ -31,8 +31,9 @@ while onMode:
                 s for s in SpriteLists.empty_list if s.rect.collidepoint(pos)]
             for sprite in empty_clicked_sprites:
                 sprite.addStudent()
-
     mainScreen.fill((100, 30, 150))
     SpriteLists.all_sprites_list.draw(mainScreen)
-
-    pygame.display.update()
+    for i in SpriteLists.line_list:
+        pygame.draw.line(mainScreen, (0, 0, 0), i[0], i[1])
+    pygame.display.flip()
+    # pygame.display.update()

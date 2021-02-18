@@ -5,6 +5,7 @@ from tools import SpriteLists, Images
 class Node(pygame.sprite.Sprite):
     def __init__(self, width, height, text, textSize):
         super().__init__()
+        self.text = text
         self.image = pygame.Surface([width, height])
         self.image.fill((207, 136, 169))
         self.rect = self.image.get_rect()
