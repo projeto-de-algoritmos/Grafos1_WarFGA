@@ -1,0 +1,3 @@
+{
+  "python.analysis.extraPaths": ["./sources", "./sources/tools", "./sources/classes"]
+}
