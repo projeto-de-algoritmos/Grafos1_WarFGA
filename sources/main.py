@@ -3,7 +3,8 @@ import sys
 from os import path
 from settings import *
 from sprites import *
-from tools import Images, SpriteLists
+from tools import Images, SpriteLists, GenerateTable
+from classes import Graph
 
 class Game:
     def __init__(self):
@@ -54,26 +55,64 @@ class Game:
             if event.type == pg.QUIT:
                 self.quit()
             if event.type == pg.MOUSEBUTTONUP:
-                """pos = pg.mouse.get_pos()
+                pos = pg.mouse.get_pos()
                 empty_clicked_sprites = [
                     s for s in SpriteLists.empty_list if s.rect.collidepoint(pos)]
                 for sprite in empty_clicked_sprites:
-                    sprite.addStudent()"""
+                    sprite.addStudent()
                 print("ok")
                 self.onMode = False
 
 
-    def play1(self):
+    def play1(self, nome):
         self.run()
-        print("jogador um jogou\n")
+        print("jogador ", nome, " jogou\n")
 
-    def play2(self):
+    def play2(self, nome):
         self.run()
-        print("jogador dois jogou\n")
+        print("jogador ", nome, " jogou\n")
+
+    def play3(self, nome):
+        self.run()
+        print("jogador ", nome, " jogou\n")
+
+    def play4(self, nome):
+        self.run()
+        print("jogador ", nome, " jogou\n")
+
+    def play5(self, nome):
+        self.run()
+        print("jogador ", nome, " jogou\n")
+
+    def play6(self, nome):
+        self.run()
+        print("jogador ", nome, " jogou\n")
+
+    def start_game(self):
+        pass
+
+    def arrange(self):
+        pass
+
 
 # create the game object
 g = Game()
 g.new()
+if len(sys.argv) <= 2 or len(sys.argv) > 7:
+    print ("Número inválido de jogadores.")
+    g.quit()
+
+g.start_game()
 while True:
-    g.play1()
-    g.play2()
+    g.arrange()
+    if len(sys.argv) >= 3:
+        g.play1(sys.argv[1])
+        g.play2(sys.argv[2])
+        if len(sys.argv) >= 4:
+            g.play3(sys.argv[3])
+            if len(sys.argv) >= 5:
+                g.play4(sys.argv[4])
+                if len(sys.argv) >= 6:
+                    g.play5(sys.argv[5])
+                    if len(sys.argv) == 7:
+                        g.play6(sys.argv[6])
