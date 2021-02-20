@@ -55,14 +55,13 @@ class Game:
             if event.type == pg.QUIT:
                 self.quit()
             if event.type == pg.MOUSEBUTTONUP:
-                pos = pg.mouse.get_pos()
+                """pos = pg.mouse.get_pos()
                 empty_clicked_sprites = [
                     s for s in SpriteLists.empty_list if s.rect.collidepoint(pos)]
                 for sprite in empty_clicked_sprites:
-                    sprite.addStudent()
+                    sprite.addStudent()"""
                 print("ok")
                 self.onMode = False
-
 
     def play1(self, nome):
         self.run()
@@ -93,7 +92,6 @@ class Game:
 
     def arrange(self):
         pass
-
 
 # create the game object
 g = Game()
