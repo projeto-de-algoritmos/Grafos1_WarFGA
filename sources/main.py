@@ -33,7 +33,9 @@ class Game:
                     Space(self, col, row)
                 if tile == 'f':
                     Floor(self, col, row)
-        self.draw()
+        self.screen.fill(BGCOLOR)
+        self.all_sprites.draw(self.screen)
+        pg.display.flip()
 
     def run(self):
         # game loop - set self.playing = False to end the game
@@ -45,11 +47,6 @@ class Game:
     def quit(self):
         pg.quit()
         sys.exit()
-
-    def draw(self):
-        self.screen.fill(BGCOLOR)
-        self.all_sprites.draw(self.screen)
-        pg.display.flip()
 
     def events(self):
         # catch all events here
