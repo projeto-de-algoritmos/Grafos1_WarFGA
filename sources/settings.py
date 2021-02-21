@@ -9,10 +9,11 @@ YELLOW = (255, 255, 0)
 # game settings
 windowSizeX = 1000
 windowSizeY = 500
+textSize = 15
+width = 300
+height = 200
 FPS = 60
 TITLE = "WAR FGA"
 BGCOLOR = DARKGREY
 
 TILESIZE = 10
-GRIDWIDTH = windowSizeX / TILESIZE
-GRIDHEIGHT = windowSizeY / TILESIZE

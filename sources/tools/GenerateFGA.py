@@ -1,17 +1,50 @@
-from tools import ClassesMap
+from tools import Places
 
+def createFGA():
+    edges = []
+    for node in Places.placesFGA:
+        for neighbour in Places.placesFGA[node]:
+            edges.append((node, neighbour)):
+    return edges
 
-def createTable(graph):
-    nodes = []
-    for i in ClassesMap.places:
-        nodes.append(graph.add_node(
-            ClassesMap.places[i][1][0], ClasssesMap.places[i][1][1], ClassesMap.places[i][2][0], ClassesMap.places[i][2][1], ClassesMap.places[i][0], 12)
-        )
-    """count = 0
-    for i in nodes:
-        for j in (FGAMap.places[count][3]):
-            graph.add_edge(
-                i, nodes[j], FGAMap.places[count][4], FGAMap.places[j][4])
-        count = count + 1"""
+def createUAC1():
+    edges = []
+    for node in Places.placesUAC1:
+        for neighbour in Places.placesUAC1[node]:
+            edges.append((node, neighbour)):
+    return edges
 
-   
+def createUAC2():
+    edges = []
+    for node in Places.placesUAC2:
+        for neighbour in Places.placesUAC2[node]:
+            edges.append((node, neighbour)):
+    return edges
+
+def createUED():
+    edges = []
+    for node in Places.placesUED:
+        for neighbour in Places.placesUED[node]:
+            edges.append((node, neighbour)):
+    return edges
+
+def createRU():
+    edges = []
+    for node in Places.placesRU:
+        for neighbour in Places.placesRU[node]:
+            edges.append((node, neighbour)):
+    return edges
+
+def createPredioNovo():
+    edges = []
+    for node in Places.placesPredioNovo:
+        for neighbour in Places.placesPredioNovo[node]:
+            edges.append((node, neighbour)):
+    return edges
+
+def createContainers():
+    edges = []
+    for node in Places.placesContainers:
+        for neighbour in Places.placesContainers[node]:
+            edges.append((node, neighbour)):
+    return edges
