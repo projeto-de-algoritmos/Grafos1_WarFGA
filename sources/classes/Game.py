@@ -448,4 +448,4 @@ class Game:
 
     def arrange(self):
         tam = len (self.player1.places)
-        print (tam)
+        
