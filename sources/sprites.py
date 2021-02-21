@@ -39,6 +39,12 @@ class Text(pg.sprite.Sprite):
         if  number == 4:
             map = Places.placesRU
 
+        if number == 5:
+            map = Places.placesContainers
+
+        if number == 6:
+            map = Places.placesPredioNovo
+
         for node in map:
             if node ==  char_int:
                 text = map[node][0]
@@ -52,6 +58,6 @@ class Text(pg.sprite.Sprite):
                 self.y = y
                 self.rect.x = x * (TILESIZE)
                 self.rect.y = y * (TILESIZE)
-                self.font = pg.font.SysFont("Arial", textSize)
+                self.font = pg.font.SysFont(FONT, textSize, False, False)
                 self.textRender = self.font.render(text, 1, (WHITE))
                 self.image.blit(self.textRender, [textSize, textSize])

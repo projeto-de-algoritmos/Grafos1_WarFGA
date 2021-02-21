@@ -5,12 +5,8 @@ class Graph:
     def __init__(self):
         self.graph = {}
 
-    def add_node(self, width, height, posX, posY, text, textSize):
-        empty_node = Node.Node(width, height, text, textSize)
-        empty_node.rect.x = posX
-        empty_node.rect.y = posY
-        self.graph[empty_node] = []
-        return empty_node
+    def add_node(self, text, textSize):
+        empty_node = Node.Node(text, textSize)
 
     def add_edge(self, src, dest, srcPos, destPos):
         if (dest in self.graph[src]):
