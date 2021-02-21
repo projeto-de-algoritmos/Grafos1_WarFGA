@@ -15,81 +15,24 @@ class Game:
         pg.display.set_icon(Images.icon)
         pg.display.set_caption(TITLE)
         self.clock = pg.time.Clock()
-        self.load_maps()
+        self.load_data()
+    
+    def load_data(self):
         self.places = Places.places
+        self.placesFGA = Places.placesFGA
+        self.placesUAC1 = Places.placesUAC1
+        self.placesUAC2 = Places.placesUAC2
+        self.placesUED = Places.placesUED
+        self.placesRU = Places.placesRU
+        self.placesPredioNovo = Places.placesPredioNovo
+        self.placesContainers = Places.placesContainers
 
-    def load_maps(self):
-        game_folder = path.dirname(__file__)
-        self.mapFGA_data = []
-        with open(path.join(game_folder, './../tools/map.txt'), 'rt') as f:
-            for line in f:
-                self.mapFGA_data.append(line)
-
-        self.mapUAC1_data = []
-        with open(path.join(game_folder, './../tools/mapUAC1.txt'), 'rt') as f:
-            for line in f:
-                self.mapUAC1_data.append(line)
-
-        self.mapUAC2_data = []
-        with open(path.join(game_folder, './../tools/mapUAC2.txt'), 'rt') as f:
-            for line in f:
-                self.mapUAC2_data.append(line)
-
-        self.mapUED_data = []
-        with open(path.join(game_folder, './../tools/mapUED.txt'), 'rt') as f:
-            for line in f:
-                self.mapUED_data.append(line)
-
-        self.mapRU_data = []
-        with open(path.join(game_folder, './../tools/mapRU.txt'), 'rt') as f:
-            for line in f:
-                self.mapRU_data.append(line)
-
-        self.mapContainers_data = []
-        with open(path.join(game_folder, './../tools/mapContainers.txt'), 'rt') as f:
-            for line in f:
-                self.mapContainers_data.append(line)
-
-        self.mapPredioNovo_data = []
-        with open(path.join(game_folder, './../tools/mapPredioNovo.txt'), 'rt') as f:
-            for line in f:
-                self.mapPredioNovo_data.append(line)
 
     def newBackground (self):
         # initialize all variables and do all the setup for a new game
         self.screen = pg.display.set_mode((windowSizeX, windowSizeY))
         self.screen.fill(BGCOLOR)
         self.all_sprites = pg.sprite.Group()
-
-        if self.map_number == 0:
-            map = self.mapFGA_data
-
-        if self.map_number == 1:
-            map = self.mapUAC1_data
-
-        if self.map_number == 2:
-            map = self.mapUAC2_data
-
-        if self.map_number == 3:
-            map = self.mapUED_data
-
-        if self.map_number == 4:
-            map = self.mapRU_data
-
-        if self.map_number == 5:
-            map = self.mapContainers_data
-
-        if self.map_number == 6:
-            map = self.mapPredioNovo_data
-
-        for row, tiles in enumerate(map):
-            for col, tile in enumerate(tiles):
-                if tile == 'w':
-                    Wall(self, col, row)
-                if tile == '1' or tile == '2' or tile  == '3' or tile == '4' or tile == '5' or tile == '6' or tile == '7' or tile == '8' or tile == '9' or tile == 'a' or tile == 'b' or tile == 'c':
-                    Text(self, tile, col, row, self.map_number)
-
-        self.all_sprites.draw(self.screen)
         pg.display.flip()
 
     def events(self):
@@ -97,22 +40,22 @@ class Game:
         # catch all events here
         if self.map_number == 0:
             buttonUAC1 = b.buttons("FGA_UAC1")
-            #pg.draw.rect(self.screen, WHITE, buttonUAC1)
+            pg.draw.rect(self.screen, WHITE, buttonUAC1)
 
             buttonUAC2 = b.buttons("FGA_UAC2")
-            #pg.draw.rect(self.screen, WHITE, buttonUAC2)
+            pg.draw.rect(self.screen, WHITE, buttonUAC2)
 
             buttonUED = b.buttons("FGA_UED")
-            #pg.draw.rect(self.screen, WHITE, buttonUED)
+            pg.draw.rect(self.screen, WHITE, buttonUED)
 
             buttonRU = b.buttons("FGA_RU")
-            #pg.draw.rect(self.screen, WHITE, buttonRU)
+            pg.draw.rect(self.screen, WHITE, buttonRU)
 
             buttonCONTAINERS = b.buttons("FGA_CONTAINERS")
-            #pg.draw.rect(self.screen, WHITE, buttonCONTAINERS)
+            pg.draw.rect(self.screen, WHITE, buttonCONTAINERS)
 
             buttonPREDIONOVO = b.buttons("FGA_PREDIONOVO")
-            #pg.draw.rect(self.screen, WHITE, buttonPREDIONOVO)
+            pg.draw.rect(self.screen, WHITE, buttonPREDIONOVO)
             pg.display.update()
 
             for event in pg.event.get():
@@ -146,43 +89,43 @@ class Game:
 
         elif self.map_number == 1:
             buttonBIBLIOTECA = b.buttons("UAC1_BIBLIOTECA")
-            #pg.draw.rect(self.screen, WHITE, buttonBIBLIOTECA)
+            pg.draw.rect(self.screen, WHITE, buttonBIBLIOTECA)
 
             buttonAUDITORIO = b.buttons("UAC1_AUDITORIO")
-            #pg.draw.rect(self.screen, WHITE, buttonAUDITORIO)
+            pg.draw.rect(self.screen, WHITE, buttonAUDITORIO)
 
             buttonESCADAS1 = b.buttons("UAC1_ESCADAS1")
-            #pg.draw.rect(self.screen, WHITE, buttonESCADAS1)
+            pg.draw.rect(self.screen, WHITE, buttonESCADAS1)
 
             buttonESCADAS2 = b.buttons("UAC1_ESCADAS2")
-            #pg.draw.rect(self.screen, WHITE, buttonESCADAS2)
+            pg.draw.rect(self.screen, WHITE, buttonESCADAS2)
 
             buttonMESAS = b.buttons("UAC1_MESAS")
-            #pg.draw.rect(self.screen, WHITE, buttonMESAS)
+            pg.draw.rect(self.screen, WHITE, buttonMESAS)
 
             buttonOBELISCO = b.buttons("UAC1_OBELISCO")
-            #pg.draw.rect(self.screen, WHITE, buttonOBELISCO)
+            pg.draw.rect(self.screen, WHITE, buttonOBELISCO)
 
             buttonSECRETARIA = b.buttons("UAC1_SECRETARIA")
-            #pg.draw.rect(self.screen, WHITE, buttonSECRETARIA)
+            pg.draw.rect(self.screen, WHITE, buttonSECRETARIA)
 
             buttonWCF = b.buttons("UAC1_WCF")
-            #pg.draw.rect(self.screen, WHITE, buttonWCF)
+            pg.draw.rect(self.screen, WHITE, buttonWCF)
 
             buttonWCM = b.buttons("UAC1_WFM")
-            #pg.draw.rect(self.screen, WHITE, buttonWCM)
+            pg.draw.rect(self.screen, WHITE, buttonWCM)
 
             buttonSALASCOMPUT = b.buttons("UAC1_SALASCOMPUT")
-            #pg.draw.rect(self.screen, WHITE, buttonSALASCOMPUT)
+            pg.draw.rect(self.screen, WHITE, buttonSALASCOMPUT)
 
             buttonSALASAULAS = b.buttons("UAC1_SALASAULAS")
-            #pg.draw.rect(self.screen, WHITE, buttonSALASAULAS)
+            pg.draw.rect(self.screen, WHITE, buttonSALASAULAS)
 
             buttonMESAS = b.buttons("UAC1_MESAS")
-            #pg.draw.rect(self.screen, WHITE, buttonMESAS)
+            pg.draw.rect(self.screen, WHITE, buttonMESAS)
 
             buttonENTRADA = b.buttons("UAC1_ENTRADA")
-            #pg.draw.rect(self.screen, WHITE, buttonENTRADA)
+            pg.draw.rect(self.screen, WHITE, buttonENTRADA)
 
             pg.display.update()
 
@@ -235,31 +178,31 @@ class Game:
 
         elif self.map_number == 2:
             buttonAUDITORIO = b.buttons("UAC2_AUDITORIO")
-            #pg.draw.rect(self.screen, WHITE, buttonAUDITORIO)
+            pg.draw.rect(self.screen, WHITE, buttonAUDITORIO)
 
             buttonMESAS = b.buttons("UAC2_MESAS")
-            #pg.draw.rect(self.screen, WHITE, buttonMESAS)
+            pg.draw.rect(self.screen, WHITE, buttonMESAS)
 
             buttonBANHEIROS01 = b.buttons("UAC2_BANHEIROS01")
-            #pg.draw.rect(self.screen, WHITE, buttonBANHEIROS01)
+            pg.draw.rect(self.screen, WHITE, buttonBANHEIROS01)
 
             buttonBANHEIROS10 = b.buttons("UAC2_BANHEIROS10")
-            #pg.draw.rect(self.screen, WHITE, buttonBANHEIROS10)
+            pg.draw.rect(self.screen, WHITE, buttonBANHEIROS10)
 
             buttonPSICOLOGO = b.buttons("UAC2_PSICOLOGO")
-            #pg.draw.rect(self.screen, WHITE, buttonPSICOLOGO)
+            pg.draw.rect(self.screen, WHITE, buttonPSICOLOGO)
 
             buttonSALASAULAS = b.buttons("UAC2_SALASAULAS")
-            #pg.draw.rect(self.screen, WHITE, buttonSALASAULAS)
+            pg.draw.rect(self.screen, WHITE, buttonSALASAULAS)
 
             buttonS10 = b.buttons("UAC2_S10")
-            #pg.draw.rect(self.screen, WHITE, buttonS10)
+            pg.draw.rect(self.screen, WHITE, buttonS10)
 
             buttonESCADAS1 = b.buttons("UAC2_ESCADAS1")
-            #pg.draw.rect(self.screen, WHITE, buttonESCADAS1)
+            pg.draw.rect(self.screen, WHITE, buttonESCADAS1)
 
             buttonESCADAS2 = b.buttons("UAC2_ESCADAS2")
-            #pg.draw.rect(self.screen, WHITE, buttonESCADAS2)
+            pg.draw.rect(self.screen, WHITE, buttonESCADAS2)
 
             pg.display.update()
 
@@ -303,25 +246,25 @@ class Game:
 
         elif self.map_number == 3:
             buttonFISICA = b.buttons("UED_FISICA")
-            #pg.draw.rect(self.screen, WHITE, buttonFISICA)
+            pg.draw.rect(self.screen, WHITE, buttonFISICA)
 
             buttonQUIMICA = b.buttons("UED_QUIMICA")
-            #pg.draw.rect(self.screen, WHITE, buttonQUIMICA)
+            pg.draw.rect(self.screen, WHITE, buttonQUIMICA)
 
             buttonMOCAP = b.buttons("UED_MOCAP")
-            #pg.draw.rect(self.screen, WHITE, buttonMOCAP)
+            pg.draw.rect(self.screen, WHITE, buttonMOCAP)
 
             buttonPED1 = b.buttons("UED_PED1")
-            #pg.draw.rect(self.screen, WHITE, buttonPED1)
+            pg.draw.rect(self.screen, WHITE, buttonPED1)
 
             buttonMESAS = b.buttons("UED_MESAS")
-            #pg.draw.rect(self.screen, WHITE, buttonMESAS)
+            pg.draw.rect(self.screen, WHITE, buttonMESAS)
 
             buttonPORTAO = b.buttons("UED_PORTAO")
-            #pg.draw.rect(self.screen, WHITE, buttonPORTAO)
+            pg.draw.rect(self.screen, WHITE, buttonPORTAO)
 
             buttonCONTAINERS = b.buttons("UED_CONTAINERS")
-            #pg.draw.rect(self.screen, WHITE, buttonCONTAINERS)
+            pg.draw.rect(self.screen, WHITE, buttonCONTAINERS)
 
             pg.display.update()
 
@@ -359,22 +302,22 @@ class Game:
 
         elif self.map_number == 4:
             buttonMESAS = b.buttons("RU_MESAS")
-            #pg.draw.rect(self.screen, WHITE, buttonMESAS)
+            pg.draw.rect(self.screen, WHITE, buttonMESAS)
 
             buttonCOZINHA = b.buttons("RU_COZINHA")
-            #pg.draw.rect(self.screen, WHITE, buttonCOZINHA)
+            pg.draw.rect(self.screen, WHITE, buttonCOZINHA)
 
             buttonUNBAJA = b.buttons("RU_UNBAJA")
-            #pg.draw.rect(self.screen, WHITE, buttonUNBAJA)
+            pg.draw.rect(self.screen, WHITE, buttonUNBAJA)
 
             buttonDAENG = b.buttons("RU_DAENG")
-            #pg.draw.rect(self.screen, WHITE, buttonDAENG)
+            pg.draw.rect(self.screen, WHITE, buttonDAENG)
 
             buttonMULTI = b.buttons("RU_MULTIMIDIA")
-            #pg.draw.rect(self.screen, WHITE, buttonMULTI)
+            pg.draw.rect(self.screen, WHITE, buttonMULTI)
 
             buttonMAMUTES = b.buttons("RU_MAMUTES")
-            #pg.draw.rect(self.screen, WHITE, buttonMAMUTES)
+            pg.draw.rect(self.screen, WHITE, buttonMAMUTES)
 
             pg.display.update()
 
@@ -409,16 +352,16 @@ class Game:
 
         elif self.map_number == 5:
             buttonEJ = b.buttons("CONTAINERS_EJ")
-            #pg.draw.rect(self.screen, WHITE, buttonEJ)
+            pg.draw.rect(self.screen, WHITE, buttonEJ)
 
             button1 = b.buttons("CONTAINERS_1")
-            #pg.draw.rect(self.screen, WHITE, button1)
+            pg.draw.rect(self.screen, WHITE, button1)
 
             button2 = b.buttons("CONTAINERS_2")
-            #pg.draw.rect(self.screen, WHITE, button2)
+            pg.draw.rect(self.screen, WHITE, button2)
 
             button3 = b.buttons("CONTAINERS_3")
-            #pg.draw.rect(self.screen, WHITE, button3)
+            pg.draw.rect(self.screen, WHITE, button3)
 
             pg.display.update()
 
@@ -447,16 +390,16 @@ class Game:
 
         elif self.map_number == 6:
             buttonENTRADA = b.buttons("PREDIONOVO_ENTRADA")
-            #pg.draw.rect(self.screen, WHITE, buttonENTRADA)
+            pg.draw.rect(self.screen, WHITE, buttonENTRADA)
 
             buttonSALA2 = b.buttons("PREDIONOVO_SALA2")
-            #pg.draw.rect(self.screen, WHITE, buttonSALA2)
+            pg.draw.rect(self.screen, WHITE, buttonSALA2)
 
             buttonSALA3 = b.buttons("PREDIONOVO_SALA3")
-            #pg.draw.rect(self.screen, WHITE, buttonSALA3)
+            pg.draw.rect(self.screen, WHITE, buttonSALA3)
 
             buttonSALA4 = b.buttons("PREDIONOVO_SALA4")
-            #pg.draw.rect(self.screen, WHITE, buttonSALA4)
+            pg.draw.rect(self.screen, WHITE, buttonSALA4)
 
             pg.display.update()
 
@@ -835,7 +778,7 @@ class Game:
     def arrange(self):
         tam = len (self.player1.places)
         while True:
-            self.map_number = 4
+            self.map_number = 2
             self.run()
             #print ("okay")
             for event in pg.event.get():
