@@ -835,7 +835,7 @@ class Game:
     def arrange(self):
         tam = len (self.player1.places)
         while True:
-            self.map_number = 1
+            self.map_number = 4
             self.run()
             #print ("okay")
             for event in pg.event.get():
