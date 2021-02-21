@@ -16,6 +16,7 @@ class Game:
         pg.display.set_caption(TITLE)
         self.clock = pg.time.Clock()
         self.load_maps()
+        self.places = Places.places
 
     def load_maps(self):
         game_folder = path.dirname(__file__)
@@ -499,27 +500,27 @@ class Game:
         pg.quit()
         sys.exit()
 
-    def play1(self, nome):
+    def play1(self):
         self.run()
         print("jogador ", nome, " jogou\n")
 
-    def play2(self, nome):
+    def play2(self):
         self.run()
         print("jogador ", nome, " jogou\n")
 
-    def play3(self, nome):
+    def play3(self):
         self.run()
         print("jogador ", nome, " jogou\n")
 
-    def play4(self, nome):
+    def play4(self):
         self.run()
         print("jogador ", nome, " jogou\n")
 
-    def play5(self, nome):
+    def play5(self):
         self.run()
         print("jogador ", nome, " jogou\n")
 
-    def play6(self, nome):
+    def play6(self):
         self.run()
         print("jogador ", nome, " jogou\n")
 
@@ -529,6 +530,7 @@ class Game:
         # create a new screen to choose the "color"
         choose.scream = pg.display.set_mode((SCREAMSIZE))
         choose.clock = pg.time.Clock()
+        #choose.scream.fill(LIGHTGREY)
         onMode = True
 
         while onMode:
@@ -575,7 +577,6 @@ class Game:
                 choose.energia = choose.font.render("Energia", False, RED)
                 choose.scream.blit(choose.energia,[50, 220])
 
-            #choose.scream.fill(LIGHTGREY)
             for event in pg.event.get():
                 if event.type == pg.QUIT:
                     choose.quit()
@@ -834,7 +835,7 @@ class Game:
     def arrange(self):
         tam = len (self.player1.places)
         while True:
-            self.map_number = 6
+            self.map_number = 1
             self.run()
             #print ("okay")
             for event in pg.event.get():
