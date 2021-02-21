@@ -3,7 +3,6 @@ from classes import Game
 
 # create the game object
 g = Game.Game()
-g.new()
 if len(sys.argv) <= 3 or len(sys.argv) > 7:
     print ("Número inválido de jogadores.")
     g.quit()
