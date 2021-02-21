@@ -12,14 +12,14 @@ w                                                                               
 w                                                                               w                         w
 w                                                                               w                         w
 w                                                                               w                         w
-w                                                                                                         w
 w                                                                               w                         w
-                                                                                wwwwwwwwwwwwwwwwwwwwwwwwwww
-c                                                                               w                         w
+w   www                                                                         w                         w
+      w                                                                         wwwwwwwwwwwwwwwwwwwwwwwwwww
+c     w                                                                         w                         w
+      w                                                                         w                         w
                                                                                 w                         w
-w                                                                               w                         w
-                                                                                w                         w
-w                                                                               w                         w
+      w                                                                         w                         w
+w     w                                                                         w                         w
 wwwwwwww  wwwwwwwwwwwwwwwwwwwwwwwwwwwww                                         w                         w
 w  5                                  w                                         w                         w
 w                                     w                                         w b                       w
@@ -27,8 +27,8 @@ w                                     w                                         
 wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww                                         w                         w
 w                                     w                                         w                         w
 w                                     w                                         w                         w
-w                                     w                                         w                         w
-w                                     w                                         w                         w
+w                                     w                                                                   w
+w                                     w                                                                   w
 w        2                            w                                         w                         w
 w                                     w                                         w                         w
 w                                                                               w                         w
@@ -40,9 +40,9 @@ wwwwwwwwwwwwwwwwwwwwwwwwwww                                                     
 w                         w                                                     w                         w
 w                         w                                                     w                         w
 w                         w                                                     w                         w
-w  a                      w                                                     w                         w
-w                                                                               w                         w
-w                         w        www  wwwww  www                              w                         w
+w  a                      w        wwwwww wwwww  w                              w                         w
+w                                  w      w      w                              w                         w
+w                         w        w      w      w                              w                         w
 w                         w        w      w      w                              w                         w
 wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww          wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
-                                   8      9                   4                                                      
+                                   8      9                  4       

@@ -19,7 +19,7 @@ placesUAC1 = {
 placesUAC2 = {
 	1: ("Auditorio Cima", [2, 5]),
 	2: ("Mesas auditorio", [1, 5]),
-	3: ("Banheiro S01", [5, 6, 8]),
+	3: ("Banheiros S01", [5, 6, 8]),
 	4: ("Banheiros S10", [7, 9]),
 	5: ("Sala psicológico", [1, 2, 3, 8]),
 	6: ("Salas de aulas", [1, 3, 5, 9]),
@@ -34,7 +34,7 @@ placesUED = {
 	2: ("Lab.Quim.Exp.", [3, 6]),
 	3: ("MOCAP", [2, 6]),
 	4: ("Lab.PED1", [1, 5, 6]),
-	5: ("Mesas Amarelas", [1, 4, 7]),
+	5: ("Mesas", [1, 4, 7]),
 	6: ("Entrada Portão", [2, 3, 4, 7]),
 	7: ("Entrada Containers", [1, 5, 6])
 }
@@ -70,8 +70,8 @@ placesFGA = {
 	2: ("UAC 2º andar", [1]),
 	3: ("UED",[1, 4, 6]),
 	4: ("RU", [1, 4, 5]),
-	5: ("Prédio novo", [4]),
-	6: ("Containers", [3])
+	5: ("Containers", [3]),
+	6: ("Prédio novo", [4])
 }
 
 places = {

@@ -3,16 +3,16 @@
 		wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
 		                        w                                                         w           w
 		                        w                                                         w           w
-		  wwwwwwwwwwwwwwwwwww   w          2                                              w           w
-		  w                 w   w                                                         w    wwwwwwww
-		  w                 w   w                                                         w    w      w
-		  w                 w   wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww       www    w      w
-		  w                 w                                                                  w      w
-		  w                 wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww      w
-		  w                                                                                           w
-		  wwwwwwwwwwwwwwwwwwwwwwwww             1                                                     w
-		                          w                                                                   w
-		                          w                                                                   w
+		                        w          2                                              w           w
+		                        w                                                         w           w
+		                        w                                                         w           w
+		                        wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww       www           w
+		                                                                                              w
+		                          wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww      w
+		                          w                                                            w      w
+		                          w             1                                              w      w
+		                          w                                                            w      w
+		                          w                                                            w      w
 		wwwwwwwwwwwwwwww      w   wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww      wwwwwwwwwwwww
 		w 6                   w                                                                       w
 		w                     w                                                                       w

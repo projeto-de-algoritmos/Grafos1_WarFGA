@@ -58,6 +58,6 @@ class Text(pg.sprite.Sprite):
                 self.y = y
                 self.rect.x = x * (TILESIZE)
                 self.rect.y = y * (TILESIZE)
-                self.font = pg.font.SysFont(FONT, textSize)
+                self.font = pg.font.SysFont(FONT, textSize, False, False)
                 self.textRender = self.font.render(text, 1, (WHITE))
                 self.image.blit(self.textRender, [textSize, textSize])
