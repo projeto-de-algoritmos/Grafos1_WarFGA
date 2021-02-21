@@ -1,9 +1,11 @@
 import pygame as pg
 import sys
 from os import path
+import random as rand
 from settings import *
 from sprites import *
-from tools import Images, SpriteLists, GenerateTable, Places
+from tools import Images, SpriteLists, GenerateTable, Places, Goals
+from classes import player
 
 class Game:
     def __init__(self):
@@ -191,12 +193,69 @@ class Game:
             pg.display.update()
         return decision
 
+    def random (self, list_goals):
+        ok = True
+        a = rand.randint(1,14)
+        for goals in list_goals:
+            if a == goals:
+                ok = False
+
+        if ok:
+            return a
+        else:
+            return self.random (list_goals)
+
     def start_game(self, argv):
-        escolha = [0,1,2,3,4,5,6]
+        list_goals = [0, 0, 0, 0, 0, 0]
+        decision = [0,0,0,0,0,0,0]
         number = len(sys.argv)
-        for i in range(1,number):
-            escolha[i] = self.choose(sys.argv[i])
-            print (escolha[i])
+        for i in range (1,number):
+            decision[i] = self.choose(sys.argv[i])
+
+        player1 = player.Player(sys.argv[1])
+        player1.add_decision(decision[1])
+        goals1 = rand.randint(1,14)
+        #print("1: ",goals1)
+        list_goals[0] = goals1
+        player1.add_goals(goals1)
+
+        player2 = player.Player(sys.argv[2])
+        player2.add_decision(decision[2])
+        goals2 = self.random(list_goals)
+        #print("2: ", goals2)
+        list_goals[1] = goals2
+        player2.add_goals(goals2)
+
+        player3 = player.Player(sys.argv[3])
+        player3.add_decision(decision[4])
+        goals3 = self.random(list_goals)
+        #print("3: ", goals3)
+        list_goals[2] = goals3
+        player3.add_goals(goals3)
+
+        if len(sys.argv) >= 5:
+            player4 = player.Player(sys.argv[4])
+            player4.add_decision(decision[4])
+            goals4 = self.random(list_goals)
+            #print("4: ", goals4)
+            list_goals[3] = goals4
+            player4.add_goals(goals4)
+
+            if len (sys.argv) >= 6:
+                player5 = player.Player(sys.argv[5])
+                player5.add_decision(decision[5])
+                goals5 = self.random(list_goals)
+                #print("5: ", goals5)
+                list_goals[4] = goals5
+                player5.add_goals(goals5)
+
+                if len(sys.argv) == 7:
+                    player6 = player.Player(sys.argv[6])
+                    player6.add_decision(decision[6])
+                    goals6 = self.random(list_goals)
+                    #print("6: ", goals6)
+                    list_goals[5] = goals6
+                    player6.add_goals(goals6)
 
     def arrange(self):
         pass
