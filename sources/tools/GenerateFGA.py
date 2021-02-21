@@ -13,5 +13,3 @@ def createTable(graph):
             graph.add_edge(
                 i, nodes[j], FGAMap.places[count][4], FGAMap.places[j][4])
         count = count + 1"""
-
-   
