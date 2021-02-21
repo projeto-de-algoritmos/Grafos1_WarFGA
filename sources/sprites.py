@@ -39,6 +39,12 @@ class Text(pg.sprite.Sprite):
         if  number == 4:
             map = Places.placesRU
 
+        if number == 5:
+            map = Places.placesContainers
+
+        if number == 6:
+            map = Places.placesPredioNovo
+
         for node in map:
             if node ==  char_int:
                 text = map[node][0]

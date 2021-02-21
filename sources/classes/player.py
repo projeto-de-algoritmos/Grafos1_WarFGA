@@ -1,9 +1,9 @@
 class Player ():
-	def __init__(self, name):
+	def __init__(self, name, decision, goals):
 		self.name = name
-
-	def add_decision(self, decision):
 		self.decision = decision
-
-	def add_goals(self, goals)
 		self.goals = goals
+		self.places = []
+
+	def add_classes(self, place):
+		self.places.append(place)
