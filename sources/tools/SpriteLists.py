@@ -1,8 +1,8 @@
-import pygame
+import pygame as pg
 
-empty_list = pygame.sprite.Group()
-player_list = pygame.sprite.Group()
-enemy_list = pygame.sprite.Group()
-connection_list = pygame.sprite.Group()
-all_sprites_list = pygame.sprite.Group()
+empty_list = pg.sprite.Group()
+player_list = pg.sprite.Group()
+enemy_list = pg.sprite.Group()
+connection_list = pg.sprite.Group()
+all_sprites_list = pg.sprite.Group()
 line_list = []

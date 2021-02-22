@@ -1,11 +1,4 @@
 import pygame as pg
-import sys
-from os import path
-import random as rand
-from settings import *
-from sprites import *
-from tools import Images, SpriteLists, GenerateTable, Places, Goals
-from classes import player
 
 class Buttons ():
 
