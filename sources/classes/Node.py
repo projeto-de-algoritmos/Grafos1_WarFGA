@@ -6,11 +6,11 @@ class Node(pygame.sprite.Sprite):
     def __init__(self, text):
         super().__init__()
         self.text = text
-        self.students = 0
+        self.students = 1
         #self.students.type = ""
 
-    def addStudents(self, qtd):
-        self.students = self.students + qtd
+    def addStudents(self):
+        self.students = self.students + 1
 
     def rmvStudents(self, qtd):
         self.students = self.students - qtd

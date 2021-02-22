@@ -105,7 +105,7 @@ class Game:
                 if tile == '1' or tile == '2' or tile  == '3' or tile == '4' or tile == '5' or tile == '6' or tile == '7' or tile == '8' or tile == '9' or tile == 'a' or tile == 'b' or tile == 'c':
                     Text(self, tile, col, row, self.map_number)
         
-        self.screen.fill(BGCOLOR)
+        #self.screen.fill(BGCOLOR)
         self.all_sprites.draw(self.screen)
         pg.display.flip()
         #pg.display.update()
@@ -159,7 +159,7 @@ class Game:
 
                             return
     
-    def run(self):
+    def run(self, player):
         self.onMode = True
         while self.onMode:
             self.dt = self.clock.tick(FPS)
@@ -171,28 +171,28 @@ class Game:
         sys.exit()
 
     def play1(self):
-        self.run()
-        print("jogador ", nome, " jogou\n")
+        self.run(1)
+        print("jogador ", self.player1.name, " jogou\n")
 
     def play2(self):
-        self.run()
-        print("jogador ", nome, " jogou\n")
+        self.run(2)
+        print("jogador ", self.player2.name, " jogou\n")
 
     def play3(self):
-        self.run()
-        print("jogador ", nome, " jogou\n")
+        self.run(3)
+        print("jogador ", self.player3.nome, " jogou\n")
 
     def play4(self):
-        self.run()
-        print("jogador ", nome, " jogou\n")
+        self.run(4)
+        print("jogador ", self.player4.name, " jogou\n")
 
     def play5(self):
-        self.run()
-        print("jogador ", nome, " jogou\n")
+        self.run(5)
+        print("jogador ", self.player5.name, " jogou\n")
 
     def play6(self):
-        self.run()
-        print("jogador ", nome, " jogou\n")
+        self.run(6)
+        print("jogador ", self.player6.name, " jogou\n")
 
     def choose(self, name, decision):
         choose = Game()
@@ -502,10 +502,112 @@ class Game:
 
         self.distributeClasses(number)
 
-    def arrange(self, map_number):
-        self.map_number = map_number
-        while True:
+    def printPlayer(self, player):
+        if player == 1:
+            p = self.player1
+        elif player == 2:
+            p = self.player2
+        elif player == 3:
+            p = self.player3
+        elif player == 4:
+            p = self.player4
+        elif player == 5:
+            p = self.player5
+        else:
+            p = self.player6
+
+        self.screen = pg.display.set_mode((windowSizeX, windowSizeY))
+        self.font = pg.font.SysFont(FONT, textSize, False, False)
+        status = 0
+        self.screen.fill(LIGHTGREY)
+        x1 = 25
+        x2 = 400
+        y1 = 50
+        y2 = 50
+        self.name = self.font.render(("Seu lugares: " + p.name + " Você tem " + str(p.newStudents) + " para colocar") , True, DARKGREY)
+        self.screen.blit(self.name, [x1, 10])
+        for j in p.places:
+            text = self.graph[j][0]
+            self.name = self.font.render(text, False, DARKGREY)
+            if status == 0:
+                self.screen.blit(self.name, [x1, y1])
+                y1 = y1 + 30
+                pg.display.flip()
+                pg.display.update()
+                status = 1
+            elif status == 1:
+                self.screen.blit(self.name, [x2, y2])
+                y2 = y2 + 30
+                pg.display.flip()
+                pg.display.update()
+                status = 0
+
+    def arrangePlayer(self, player):
+
+        if player == 1:
+            p = self.player1
+        elif player == 2:
+            p = self.player2
+        elif player == 3:
+            p = self.player3
+        elif player == 4:
+            p = self.player4
+        elif player == 5:
+            p = self.player5
+        else:
+            p = self.player6
+
+        tam = len(p.places)
+        p.newStudents = tam/2
+        status = 0
+        buttons = []
+        pos = []
+        x1 = 25
+        x2 = 400
+        y1 = 50
+        y2 = 50
+        onMode = True
+
+        self.printPlayer(player)
+        for j in p.places:
+            if status == 0:
+                buttons.append((x1, y1, 120, 10))
+                pos.append(j)
+                y1 = y1 + 30
+                status = 1
+            elif status == 1:
+                buttons.append((x2, y2, 120, 10))
+                pos.append(j)
+                y2 = y2 + 30
+                status = 0
+
+        while onMode:
             for event in pg.event.get():
                 if event.type == pg.QUIT:
                     self.quit()
+                elif event.type == pg.MOUSEBUTTONDOWN:
+                    for i in range(tam):
+                        b = buttons[i]
+                        position = pos[i]
+                        button = pg.Rect(b)
+                        if button.collidepoint(event.pos):
+                            #teste = p.places[i]
+                            #text = self.graph[teste][0]
+                            p.newStudents = p.newStudents - 1
+                            p.add_students(position)
+                            pg.display.flip()
+                            pg.display.update()
+                            self.printPlayer(player)
+                            if p.newStudents == 0:
+                                onMode = False
+
+    def arrange(self, map_number):
+        self.map_number = map_number
+        self.arrangePlayer(1)
+        self.arrangePlayer(2)
+        self.arrangePlayer(3)
+        
+        for event in pg.event.get():
+            if event.type == pg.QUIT:
+                self.quit()
         
