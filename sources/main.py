@@ -9,10 +9,12 @@ if len(sys.argv) <= 3 or len(sys.argv) > 7:
     print ("Número inválido de jogadores.")
     g.quit()
 
+g.count = 0
 g.start_game(sys.argv)
+g.map_mumber = 0
 g.players = len(sys.argv) -1
 while True:
-	g.arrange(0)
+	g.arrange(g.map_mumber)
 		#"""g.play1()
 	    #g.play2()
 	    #g.play3()

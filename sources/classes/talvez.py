@@ -1,25 +1,21 @@
 import pygame as pg
 import sys
 from os import path
-from time import sleep
 import random as rand
 from settings import *
 from sprites import *
-from tools import Images, SpriteLists, Places, Goals
-from classes import player, Buttons, Node
+from tools import Images, SpriteLists, GenerateTable, Places, Goals
+from classes import player, Buttons
 
 class Game:
     def __init__(self):
-        pg.init()
-        pg.mouse.set_visible(1)
-        self.screen = pg.display.set_mode((windowSizeX, windowSizeY))
         pg.display.set_icon(Images.icon)
         pg.display.set_caption(TITLE)
         self.clock = pg.time.Clock()
+        self.load_maps()
         self.load_data()
-        self.load_map()
-    
-    def load_map(self):
+
+    def load_maps(self):
         game_folder = path.dirname(__file__)
         self.mapFGA_data = []
         with open(path.join(game_folder, './../tools/map.txt'), 'rt') as f:
@@ -57,143 +53,121 @@ class Game:
                 self.mapPredioNovo_data.append(line)
 
     def load_data(self):
-        self.graph = Places.places
-        self.graphFGA = Places.placesFGA
-        self.graphUAC1 = Places.placesUAC1
-        self.graphUAC2 = Places.placesUAC2
-        self.graphUED = Places.placesUED
-        self.graphRU = Places.placesRU
-        self.graphPredioNovo = Places.placesPredioNovo
-        self.graphContainers = Places.placesContainers
-        self.currentGraph = self.graphFGA
-
-        for node in self.graph:
-            text = self.graph[node][0]
+        self.places = Places.places
+        self.placesFGA = Places.placesFGA
+        self.placesUAC1 = Places.placesUAC1
+        self.placesUAC2 = Places.placesUAC2
+        self.placesUED = Places.placesUED
+        self.placesRU = Places.placesRU
+        self.placesPredioNovo = Places.placesPredioNovo
+        self.placesContainers = Places.placesContainers
 
     def newBackground (self):
         # initialize all variables and do all the setup for a new game
         self.screen = pg.display.set_mode((windowSizeX, windowSizeY))
         self.screen.fill(BGCOLOR)
         self.all_sprites = pg.sprite.Group()
-        map = []
 
-        if self.map_number == 0:
+        if number == 0:
             map = self.mapFGA_data
 
-        if self.map_number == 1:
+        if number == 1:
             map = self.mapUAC1_data
 
-        if self.map_number == 2:
+        if number == 2:
             map = self.mapUAC2_data
 
-        if self.map_number == 3:
+        if number == 3:
             map = self.mapUED_data
 
-        if self.map_number == 4:
+        if number == 4:
             map = self.mapRU_data
 
-        if self.map_number == 5:
-            map = self.mapCONTAINERS_data
+        if number == 5:
+        	map = self.mapCONTAINERS_data
 
-        if self.map_number == 6:
-            map = self.mapPredioNovo_data
+        if number == 6
+        	map = self.mapPredioNovo_data
 
         for row, tiles in enumerate(map):
             for col, tile in enumerate(tiles):
                 if tile == 'w':
                     Wall(self, col, row)
                 if tile == '1' or tile == '2' or tile  == '3' or tile == '4' or tile == '5' or tile == '6' or tile == '7' or tile == '8' or tile == '9' or tile == 'a' or tile == 'b' or tile == 'c':
-                    Text(self, tile, col, row, self.map_number)
+                    Text(self, tile, col, row, number)
         
         self.screen.fill(BGCOLOR)
         self.all_sprites.draw(self.screen)
         pg.display.flip()
-        #pg.display.update()
 
-    def events(self):
-        for event in pg.event.get():
-            if event.type == pg.QUIT:
+    def events (self):
+		for event in pg.event.get():
+        	if event.type == pg.QUIT:
                 self.quit()
 
-            if event.type == pg.MOUSEBUTTONUP:
-                if self.count == 0:
-                    self.count = 1
-                else:
-                    for places in self.currentGraph:
-                        button = pg.Rect(self.currentGraph[places][2])
-                        if button.collidepoint(event.pos):
-                            print (self.currentGraph[places][0])
-                            if self.map_number == 0:
-                                self.map_number = places
-                                if places == 1:
-                                    self.currentGraph = self.graphUAC1
-                                elif places == 2:
-                                    self.currentGraph = self.graphUAC2
-                                elif places == 3:
-                                    self.currentGraph = self.graphUED
-                                elif places == 4:
-                                    self.currentGraph = self.graphRU
-                                elif places == 5:
-                                    self.currentGraph = self.graphContainers
-                                else:
-                                    self.currentGraph = self.graphPredioNovo
+			if event.type == pg.MOUSEBUTTONUP:
+             	for places in self.graphFGA:
+             		if self.graphFGA[places][2].collidepoint(event.pos):
+             			print (self.graphFGA[places][0])
 
-                            elif self.map_number == 1:
-                                if places == 3 or places == 4:
-                                    self.map_number = 2
-                                    self.currentGraph = self.graphUAC2
-                                if places == 'c':
-                                    self.map_number = 0
-                                    self.currentGraph = self.graphFGA
-
-                            elif self.map_number == 2:
-                                if places == 8 or places == 9:
-                                    self.map_number = 1
-                                    self.currentGraph = self.graphUAC1
-
-                            elif self.map_number == 3:
-                                if places == 6 or places == 7:
-                                    self.map_number = 0
-                                    self.currentGraph = self.graphFGA
-
-
-                            return
-    
     def run(self):
+        self.newBackground()
         self.onMode = True
         while self.onMode:
             self.dt = self.clock.tick(FPS)
-            self.newBackground()
             self.events()
-
-    def quit(self):
+	
+	def quit(self):
         pg.quit()
         sys.exit()
 
+    def events(self):
+        # catch all events here
+        for event in pg.event.get():
+            if event.type == pg.QUIT:
+                self.quit()
+            if event.type == pg.MOUSEBUTTONUP:
+                pos = pg.mouse.get_pos()
+                empty_clicked_sprites = [
+                    s for s in SpriteLists.empty_list if s.rect.collidepoint(pos)]
+                for sprite in empty_clicked_sprites:
+                    sprite.addStudent()
+                print("ok")
+                self.onMode = False
+
+
+    def play1(self, nome):
     def play1(self):
         self.run()
         print("jogador ", nome, " jogou\n")
 
+    def play2(self, nome):
     def play2(self):
         self.run()
         print("jogador ", nome, " jogou\n")
 
+    def play3(self, nome):
     def play3(self):
         self.run()
         print("jogador ", nome, " jogou\n")
 
+    def play4(self, nome):
     def play4(self):
         self.run()
         print("jogador ", nome, " jogou\n")
 
+    def play5(self, nome):
     def play5(self):
         self.run()
         print("jogador ", nome, " jogou\n")
 
+    def play6(self, nome):
     def play6(self):
         self.run()
         print("jogador ", nome, " jogou\n")
 
+    def start_game(self, number):
+        pass
     def choose(self, name, decision):
         choose = Game()
 
@@ -205,45 +179,45 @@ class Game:
 
         while onMode:
             choose.font = pg.font.SysFont(FONT, textSize, False, False)
-            choose.name = choose.font.render(name, False, LIGHTGREY)
+            choose.name = choose.font.render(name, False, WHITE)
             choose.scream.blit(choose.name, [25, 10])
-            choose.choose = choose.font.render("Escolha seus estudantes", False, LIGHTGREY)
+            choose.choose = choose.font.render("Escolha seus estudantes", False, WHITE)
             choose.scream.blit(choose.choose, [25, 30])
 
             # don't let them choose the same "color"
             if decision[0] == 0:
                 buttonEng = pg.Rect(40, 70, 100, 15)
-                #pg.draw.rect(choose.screen, LIGHTGREY, buttonEng)
+                #pg.draw.rect(choose.screen, WHITE, buttonEng)
                 choose.eng = choose.font.render("Engenharias", False, RED)
                 choose.scream.blit(choose.eng,[50, 70])
 
             if decision[1] == 0:
                 buttonSoftware = pg.Rect(40,100,100,15)
-                #pg.draw.rect(choose.scream,LIGHTGREY,buttonSoftware)
+                #pg.draw.rect(choose.scream,WHITE,buttonSoftware)
                 choose.software = choose.font.render("Software", False, RED)
                 choose.scream.blit(choose.software,[50, 100])
 
             if decision[2] == 0:
                 buttonEletronica = pg.Rect(40,130,100,15)
-                #pg.draw.rect(choose.scream,LIGHTGREY,buttonEletronica)
+                #pg.draw.rect(choose.scream,WHITE,buttonEletronica)
                 choose.eletronica = choose.font.render("Eletrônica", False, RED)
                 choose.scream.blit(choose.eletronica,[50, 130])
 
             if decision [3] == 0:
                 buttonAero = pg.Rect(40,160,100,15)
-                #pg.draw.rect(choose.scream,LIGHTGREY,buttonAero)
+                #pg.draw.rect(choose.scream,WHITE,buttonAero)
                 choose.aero = choose.font.render("Aeroespacial", False, RED)
                 choose.scream.blit(choose.aero,[50, 160])
 
             if decision[4] == 0:
                 buttonAuto = pg.Rect(40,190,100,15)
-                #pg.draw.rect(choose.scream,LIGHTGREY,buttonAuto)
+                #pg.draw.rect(choose.scream,WHITE,buttonAuto)
                 choose.auto = choose.font.render("Automotiva", False, RED)
                 choose.scream.blit(choose.auto,[50, 190])
 
             if decision[5] == 0:
                 buttonEnergia = pg.Rect(40,220,100,15)
-                #pg.draw.rect(choose.scream,LIGHTGREY,buttonEnergia)
+                #pg.draw.rect(choose.scream,WHITE,buttonEnergia)
                 choose.energia = choose.font.render("Energia", False, RED)
                 choose.scream.blit(choose.energia,[50, 220])
 
@@ -502,10 +476,13 @@ class Game:
 
         self.distributeClasses(number)
 
-    def arrange(self, map_number):
-        self.map_number = map_number
+    def arrange(self):
+        pass 
+        tam = len (self.player1.places)
         while True:
+            self.map_number = 2
+            self.run()
+            #print ("okay")
             for event in pg.event.get():
                 if event.type == pg.QUIT:
                     self.quit()
-        

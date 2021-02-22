@@ -8,7 +8,7 @@ class Graph:
         empty_node = Node.Node(text)
 
     def print_node (self):
-        return empty_node.text
+        return empty_node
 
     """def add_edge(self, src, dest, srcPos, destPos):
         if (dest in self.graph[src]):
