@@ -16,48 +16,18 @@ class Wall(pg.sprite.Sprite):
         self.rect.y = y * (TILESIZE)
 
 class Text(pg.sprite.Sprite):
-    def __init__(self, game, char_int, x, y, number):
-        self.groups = game.all_sprites
-        pg.sprite.Sprite.__init__(self, self.groups)
-        self.game = game
-
-        if  char_int != 'a' and char_int != 'b' and char_int != 'c':
-             char_int = int(char_int)
-
-        if  number == 0:
-            map = Places.placesFGA
-
-        if  number == 1:
-            map = Places.placesUAC1
-
-        if  number == 2:
-            map = Places.placesUAC2
-
-        if  number == 3:
-            map = Places.placesUED
-
-        if  number == 4:
-            map = Places.placesRU
-
-        if number == 5:
-            map = Places.placesContainers
-
-        if number == 6:
-            map = Places.placesPredioNovo
-
-        for node in map:
-            if node ==  char_int:
-                text = map[node][0]
-                self.image = pg.Surface([155, 40])
-                if number == 0:
-                    self.image.fill((LIGHTGREY))
-                else:
-                    self.image.fill((DARKGREY))
-                self.rect = self.image.get_rect()
-                self.x = x
-                self.y = y
-                self.rect.x = x * (TILESIZE)
-                self.rect.y = y * (TILESIZE)
-                self.font = pg.font.SysFont(FONT, textSize, False, False)
-                self.textRender = self.font.render(text, 1, (WHITE))
-                self.image.blit(self.textRender, [textSize, textSize])
+    def __init__(self, button, text):
+        #self.groups = game.all_sprites
+        #pg.sprite.Sprite.__init__(self, self.groups)
+        #self.game = game
+        self.image = pg.Surface([155, 40])
+        self.image.fill((LIGHTGREY))
+        (x,y,x1,y1) = button
+        self.rect = self.image.get_rect()
+        self.x = x
+        self.y = y
+        self.rect.x = (x + x1)/2
+        self.rect.y = (y + y1)/2
+        self.font = pg.font.SysFont(FONT, textSize, False, False)
+        self.textRender = self.font.render(text, 1, (WHITE))
+        self.image.blit(self.textRender, [textSize, textSize])

@@ -4,8 +4,8 @@ from os import path
 import random as rand
 from settings import *
 from sprites import *
-from tools import Images, SpriteLists, GenerateTable, Places, Goals
-from classes import player, Buttons
+from tools import Images, SpriteLists, Places, Goals
+from classes import player, Buttons, Node
 
 class Game:
     def __init__(self):
@@ -18,15 +18,17 @@ class Game:
         self.load_data()
     
     def load_data(self):
-        self.places = Places.places
-        self.placesFGA = Places.placesFGA
-        self.placesUAC1 = Places.placesUAC1
-        self.placesUAC2 = Places.placesUAC2
-        self.placesUED = Places.placesUED
-        self.placesRU = Places.placesRU
-        self.placesPredioNovo = Places.placesPredioNovo
-        self.placesContainers = Places.placesContainers
+        self.graph = Places.places
+        self.graphFGA = Places.placesFGA
+        self.graphUAC1 = Places.placesUAC1
+        self.graphUAC2 = Places.placesUAC2
+        self.graphUED = Places.placesUED
+        self.graphRU = Places.placesRU
+        self.graphPredioNovo = Places.placesPredioNovo
+        self.graphContainers = Places.placesContainers
 
+        for node in self.graph:
+            text = self.graph[node][0]
 
     def newBackground (self):
         # initialize all variables and do all the setup for a new game
@@ -38,24 +40,25 @@ class Game:
     def events(self):
         b = Buttons.Buttons()
         # catch all events here
+        
         if self.map_number == 0:
             buttonUAC1 = b.buttons("FGA_UAC1")
-            pg.draw.rect(self.screen, WHITE, buttonUAC1)
+            pg.draw.rect(self.screen, LIGHTGREY, buttonUAC1)
 
             buttonUAC2 = b.buttons("FGA_UAC2")
-            pg.draw.rect(self.screen, WHITE, buttonUAC2)
+            pg.draw.rect(self.screen, LIGHTGREY, buttonUAC2)
 
             buttonUED = b.buttons("FGA_UED")
-            pg.draw.rect(self.screen, WHITE, buttonUED)
+            pg.draw.rect(self.screen, LIGHTGREY, buttonUED)
 
             buttonRU = b.buttons("FGA_RU")
-            pg.draw.rect(self.screen, WHITE, buttonRU)
+            pg.draw.rect(self.screen, LIGHTGREY, buttonRU)
 
             buttonCONTAINERS = b.buttons("FGA_CONTAINERS")
-            pg.draw.rect(self.screen, WHITE, buttonCONTAINERS)
+            pg.draw.rect(self.screen, LIGHTGREY, buttonCONTAINERS)
 
             buttonPREDIONOVO = b.buttons("FGA_PREDIONOVO")
-            pg.draw.rect(self.screen, WHITE, buttonPREDIONOVO)
+            pg.draw.rect(self.screen, LIGHTGREY, buttonPREDIONOVO)
             pg.display.update()
 
             for event in pg.event.get():
@@ -89,43 +92,43 @@ class Game:
 
         elif self.map_number == 1:
             buttonBIBLIOTECA = b.buttons("UAC1_BIBLIOTECA")
-            pg.draw.rect(self.screen, WHITE, buttonBIBLIOTECA)
+            pg.draw.rect(self.screen, LIGHTGREY, buttonBIBLIOTECA)
 
             buttonAUDITORIO = b.buttons("UAC1_AUDITORIO")
-            pg.draw.rect(self.screen, WHITE, buttonAUDITORIO)
+            pg.draw.rect(self.screen, LIGHTGREY, buttonAUDITORIO)
 
             buttonESCADAS1 = b.buttons("UAC1_ESCADAS1")
-            pg.draw.rect(self.screen, WHITE, buttonESCADAS1)
+            pg.draw.rect(self.screen, LIGHTGREY, buttonESCADAS1)
 
             buttonESCADAS2 = b.buttons("UAC1_ESCADAS2")
-            pg.draw.rect(self.screen, WHITE, buttonESCADAS2)
+            pg.draw.rect(self.screen, LIGHTGREY, buttonESCADAS2)
 
             buttonMESAS = b.buttons("UAC1_MESAS")
-            pg.draw.rect(self.screen, WHITE, buttonMESAS)
+            pg.draw.rect(self.screen, LIGHTGREY, buttonMESAS)
 
             buttonOBELISCO = b.buttons("UAC1_OBELISCO")
-            pg.draw.rect(self.screen, WHITE, buttonOBELISCO)
+            pg.draw.rect(self.screen, LIGHTGREY, buttonOBELISCO)
 
             buttonSECRETARIA = b.buttons("UAC1_SECRETARIA")
-            pg.draw.rect(self.screen, WHITE, buttonSECRETARIA)
+            pg.draw.rect(self.screen, LIGHTGREY, buttonSECRETARIA)
 
             buttonWCF = b.buttons("UAC1_WCF")
-            pg.draw.rect(self.screen, WHITE, buttonWCF)
+            pg.draw.rect(self.screen, LIGHTGREY, buttonWCF)
 
             buttonWCM = b.buttons("UAC1_WFM")
-            pg.draw.rect(self.screen, WHITE, buttonWCM)
+            pg.draw.rect(self.screen, LIGHTGREY, buttonWCM)
 
             buttonSALASCOMPUT = b.buttons("UAC1_SALASCOMPUT")
-            pg.draw.rect(self.screen, WHITE, buttonSALASCOMPUT)
+            pg.draw.rect(self.screen, LIGHTGREY, buttonSALASCOMPUT)
 
             buttonSALASAULAS = b.buttons("UAC1_SALASAULAS")
-            pg.draw.rect(self.screen, WHITE, buttonSALASAULAS)
+            pg.draw.rect(self.screen, LIGHTGREY, buttonSALASAULAS)
 
             buttonMESAS = b.buttons("UAC1_MESAS")
-            pg.draw.rect(self.screen, WHITE, buttonMESAS)
+            pg.draw.rect(self.screen, LIGHTGREY, buttonMESAS)
 
             buttonENTRADA = b.buttons("UAC1_ENTRADA")
-            pg.draw.rect(self.screen, WHITE, buttonENTRADA)
+            pg.draw.rect(self.screen, LIGHTGREY, buttonENTRADA)
 
             pg.display.update()
 
@@ -178,31 +181,31 @@ class Game:
 
         elif self.map_number == 2:
             buttonAUDITORIO = b.buttons("UAC2_AUDITORIO")
-            pg.draw.rect(self.screen, WHITE, buttonAUDITORIO)
+            pg.draw.rect(self.screen, LIGHTGREY, buttonAUDITORIO)
 
             buttonMESAS = b.buttons("UAC2_MESAS")
-            pg.draw.rect(self.screen, WHITE, buttonMESAS)
+            pg.draw.rect(self.screen, LIGHTGREY, buttonMESAS)
 
             buttonBANHEIROS01 = b.buttons("UAC2_BANHEIROS01")
-            pg.draw.rect(self.screen, WHITE, buttonBANHEIROS01)
+            pg.draw.rect(self.screen, LIGHTGREY, buttonBANHEIROS01)
 
             buttonBANHEIROS10 = b.buttons("UAC2_BANHEIROS10")
-            pg.draw.rect(self.screen, WHITE, buttonBANHEIROS10)
+            pg.draw.rect(self.screen, LIGHTGREY, buttonBANHEIROS10)
 
             buttonPSICOLOGO = b.buttons("UAC2_PSICOLOGO")
-            pg.draw.rect(self.screen, WHITE, buttonPSICOLOGO)
+            pg.draw.rect(self.screen, LIGHTGREY, buttonPSICOLOGO)
 
             buttonSALASAULAS = b.buttons("UAC2_SALASAULAS")
-            pg.draw.rect(self.screen, WHITE, buttonSALASAULAS)
+            pg.draw.rect(self.screen, LIGHTGREY, buttonSALASAULAS)
 
             buttonS10 = b.buttons("UAC2_S10")
-            pg.draw.rect(self.screen, WHITE, buttonS10)
+            pg.draw.rect(self.screen, LIGHTGREY, buttonS10)
 
             buttonESCADAS1 = b.buttons("UAC2_ESCADAS1")
-            pg.draw.rect(self.screen, WHITE, buttonESCADAS1)
+            pg.draw.rect(self.screen, LIGHTGREY, buttonESCADAS1)
 
             buttonESCADAS2 = b.buttons("UAC2_ESCADAS2")
-            pg.draw.rect(self.screen, WHITE, buttonESCADAS2)
+            pg.draw.rect(self.screen, LIGHTGREY, buttonESCADAS2)
 
             pg.display.update()
 
@@ -246,25 +249,25 @@ class Game:
 
         elif self.map_number == 3:
             buttonFISICA = b.buttons("UED_FISICA")
-            pg.draw.rect(self.screen, WHITE, buttonFISICA)
+            pg.draw.rect(self.screen, LIGHTGREY, buttonFISICA)
 
             buttonQUIMICA = b.buttons("UED_QUIMICA")
-            pg.draw.rect(self.screen, WHITE, buttonQUIMICA)
+            pg.draw.rect(self.screen, LIGHTGREY, buttonQUIMICA)
 
             buttonMOCAP = b.buttons("UED_MOCAP")
-            pg.draw.rect(self.screen, WHITE, buttonMOCAP)
+            pg.draw.rect(self.screen, LIGHTGREY, buttonMOCAP)
 
             buttonPED1 = b.buttons("UED_PED1")
-            pg.draw.rect(self.screen, WHITE, buttonPED1)
+            pg.draw.rect(self.screen, LIGHTGREY, buttonPED1)
 
             buttonMESAS = b.buttons("UED_MESAS")
-            pg.draw.rect(self.screen, WHITE, buttonMESAS)
+            pg.draw.rect(self.screen, LIGHTGREY, buttonMESAS)
 
             buttonPORTAO = b.buttons("UED_PORTAO")
-            pg.draw.rect(self.screen, WHITE, buttonPORTAO)
+            pg.draw.rect(self.screen, LIGHTGREY, buttonPORTAO)
 
             buttonCONTAINERS = b.buttons("UED_CONTAINERS")
-            pg.draw.rect(self.screen, WHITE, buttonCONTAINERS)
+            pg.draw.rect(self.screen, LIGHTGREY, buttonCONTAINERS)
 
             pg.display.update()
 
@@ -302,22 +305,22 @@ class Game:
 
         elif self.map_number == 4:
             buttonMESAS = b.buttons("RU_MESAS")
-            pg.draw.rect(self.screen, WHITE, buttonMESAS)
+            pg.draw.rect(self.screen, LIGHTGREY, buttonMESAS)
 
             buttonCOZINHA = b.buttons("RU_COZINHA")
-            pg.draw.rect(self.screen, WHITE, buttonCOZINHA)
+            pg.draw.rect(self.screen, LIGHTGREY, buttonCOZINHA)
 
             buttonUNBAJA = b.buttons("RU_UNBAJA")
-            pg.draw.rect(self.screen, WHITE, buttonUNBAJA)
+            pg.draw.rect(self.screen, LIGHTGREY, buttonUNBAJA)
 
             buttonDAENG = b.buttons("RU_DAENG")
-            pg.draw.rect(self.screen, WHITE, buttonDAENG)
+            pg.draw.rect(self.screen, LIGHTGREY, buttonDAENG)
 
             buttonMULTI = b.buttons("RU_MULTIMIDIA")
-            pg.draw.rect(self.screen, WHITE, buttonMULTI)
+            pg.draw.rect(self.screen, LIGHTGREY, buttonMULTI)
 
             buttonMAMUTES = b.buttons("RU_MAMUTES")
-            pg.draw.rect(self.screen, WHITE, buttonMAMUTES)
+            pg.draw.rect(self.screen, LIGHTGREY, buttonMAMUTES)
 
             pg.display.update()
 
@@ -352,16 +355,16 @@ class Game:
 
         elif self.map_number == 5:
             buttonEJ = b.buttons("CONTAINERS_EJ")
-            pg.draw.rect(self.screen, WHITE, buttonEJ)
+            pg.draw.rect(self.screen, LIGHTGREY, buttonEJ)
 
             button1 = b.buttons("CONTAINERS_1")
-            pg.draw.rect(self.screen, WHITE, button1)
+            pg.draw.rect(self.screen, LIGHTGREY, button1)
 
             button2 = b.buttons("CONTAINERS_2")
-            pg.draw.rect(self.screen, WHITE, button2)
+            pg.draw.rect(self.screen, LIGHTGREY, button2)
 
             button3 = b.buttons("CONTAINERS_3")
-            pg.draw.rect(self.screen, WHITE, button3)
+            pg.draw.rect(self.screen, LIGHTGREY, button3)
 
             pg.display.update()
 
@@ -390,16 +393,16 @@ class Game:
 
         elif self.map_number == 6:
             buttonENTRADA = b.buttons("PREDIONOVO_ENTRADA")
-            pg.draw.rect(self.screen, WHITE, buttonENTRADA)
+            pg.draw.rect(self.screen, LIGHTGREY, buttonENTRADA)
 
             buttonSALA2 = b.buttons("PREDIONOVO_SALA2")
-            pg.draw.rect(self.screen, WHITE, buttonSALA2)
+            pg.draw.rect(self.screen, LIGHTGREY, buttonSALA2)
 
             buttonSALA3 = b.buttons("PREDIONOVO_SALA3")
-            pg.draw.rect(self.screen, WHITE, buttonSALA3)
+            pg.draw.rect(self.screen, LIGHTGREY, buttonSALA3)
 
             buttonSALA4 = b.buttons("PREDIONOVO_SALA4")
-            pg.draw.rect(self.screen, WHITE, buttonSALA4)
+            pg.draw.rect(self.screen, LIGHTGREY, buttonSALA4)
 
             pg.display.update()
 
@@ -478,45 +481,45 @@ class Game:
 
         while onMode:
             choose.font = pg.font.SysFont(FONT, textSize, False, False)
-            choose.name = choose.font.render(name, False, WHITE)
+            choose.name = choose.font.render(name, False, LIGHTGREY)
             choose.scream.blit(choose.name, [25, 10])
-            choose.choose = choose.font.render("Escolha seus estudantes", False, WHITE)
+            choose.choose = choose.font.render("Escolha seus estudantes", False, LIGHTGREY)
             choose.scream.blit(choose.choose, [25, 30])
 
             # don't let them choose the same "color"
             if decision[0] == 0:
                 buttonEng = pg.Rect(40, 70, 100, 15)
-                #pg.draw.rect(choose.screen, WHITE, buttonEng)
+                #pg.draw.rect(choose.screen, LIGHTGREY, buttonEng)
                 choose.eng = choose.font.render("Engenharias", False, RED)
                 choose.scream.blit(choose.eng,[50, 70])
 
             if decision[1] == 0:
                 buttonSoftware = pg.Rect(40,100,100,15)
-                #pg.draw.rect(choose.scream,WHITE,buttonSoftware)
+                #pg.draw.rect(choose.scream,LIGHTGREY,buttonSoftware)
                 choose.software = choose.font.render("Software", False, RED)
                 choose.scream.blit(choose.software,[50, 100])
 
             if decision[2] == 0:
                 buttonEletronica = pg.Rect(40,130,100,15)
-                #pg.draw.rect(choose.scream,WHITE,buttonEletronica)
+                #pg.draw.rect(choose.scream,LIGHTGREY,buttonEletronica)
                 choose.eletronica = choose.font.render("Eletrônica", False, RED)
                 choose.scream.blit(choose.eletronica,[50, 130])
 
             if decision [3] == 0:
                 buttonAero = pg.Rect(40,160,100,15)
-                #pg.draw.rect(choose.scream,WHITE,buttonAero)
+                #pg.draw.rect(choose.scream,LIGHTGREY,buttonAero)
                 choose.aero = choose.font.render("Aeroespacial", False, RED)
                 choose.scream.blit(choose.aero,[50, 160])
 
             if decision[4] == 0:
                 buttonAuto = pg.Rect(40,190,100,15)
-                #pg.draw.rect(choose.scream,WHITE,buttonAuto)
+                #pg.draw.rect(choose.scream,LIGHTGREY,buttonAuto)
                 choose.auto = choose.font.render("Automotiva", False, RED)
                 choose.scream.blit(choose.auto,[50, 190])
 
             if decision[5] == 0:
                 buttonEnergia = pg.Rect(40,220,100,15)
-                #pg.draw.rect(choose.scream,WHITE,buttonEnergia)
+                #pg.draw.rect(choose.scream,LIGHTGREY,buttonEnergia)
                 choose.energia = choose.font.render("Energia", False, RED)
                 choose.scream.blit(choose.energia,[50, 220])
 
@@ -775,12 +778,10 @@ class Game:
 
         self.distributeClasses(number)
 
-    def arrange(self):
-        tam = len (self.player1.places)
+    def arrange(self, map_number):
+        self.map_number = map_number
         while True:
-            self.map_number = 2
             self.run()
-            #print ("okay")
             for event in pg.event.get():
                 if event.type == pg.QUIT:
                     self.quit()

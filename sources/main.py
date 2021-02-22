@@ -12,7 +12,7 @@ if len(sys.argv) <= 3 or len(sys.argv) > 7:
 g.start_game(sys.argv)
 g.players = len(sys.argv) -1
 while True:
-	g.arrange()
+	g.arrange(0)
 		#"""g.play1()
 	    #g.play2()
 	    #g.play3()
