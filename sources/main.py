@@ -11,10 +11,9 @@ if len(sys.argv) <= 3 or len(sys.argv) > 7:
 
 g.count = 0
 g.start_game(sys.argv)
-g.map_mumber = 0
 g.players = len(sys.argv) -1
 while True:
-	g.arrange(g.map_mumber)
+	g.arrange()
 	g.play1()
 	g.play2()
 	g.play3()

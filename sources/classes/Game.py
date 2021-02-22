@@ -107,17 +107,25 @@ class Game:
         
         #self.screen.fill(BGCOLOR)
         self.all_sprites.draw(self.screen)
+        exit = self.font.render("Finish your turn" , True, RED)
+        self.screen.blit(exit, EXIT)
+        name = self.font.render(("Vez do jogador: " + self.currentPlayer.name) , True, RED)
+        self.screen.blit(name, PLAYER)
+        pg.display.update()
         pg.display.flip()
-        #pg.display.update()
 
     def events(self):
+        buttonFinish = pg.Rect(800, 450, 100, 20)
+        #pg.draw.rect(self.screen, RED, buttonFinish)
+        pg.display.flip()
+        pg.display.update()
         for event in pg.event.get():
             if event.type == pg.QUIT:
                 self.quit()
 
             if event.type == pg.MOUSEBUTTONUP:
-                if self.count == 0:
-                    self.count = 1
+                if buttonFinish.collidepoint(event.pos):
+                    self.onMode = False
                 else:
                     for places in self.currentGraph:
                         button = pg.Rect(self.currentGraph[places][2])
@@ -159,7 +167,7 @@ class Game:
 
                             return
     
-    def run(self, player):
+    def run(self):
         self.onMode = True
         while self.onMode:
             self.dt = self.clock.tick(FPS)
@@ -171,27 +179,33 @@ class Game:
         sys.exit()
 
     def play1(self):
-        self.run(1)
+        self.currentPlayer = self.player1
+        self.run()
         print("jogador ", self.player1.name, " jogou\n")
 
     def play2(self):
-        self.run(2)
+        self.currentPlayer = self.player2
+        self.run()
         print("jogador ", self.player2.name, " jogou\n")
 
     def play3(self):
-        self.run(3)
-        print("jogador ", self.player3.nome, " jogou\n")
+        self.currentPlayer = self.player3
+        self.run()
+        print("jogador ", self.player3.name, " jogou\n")
 
     def play4(self):
-        self.run(4)
+        self.currentPlayer = self.player4
+        self.run()
         print("jogador ", self.player4.name, " jogou\n")
 
     def play5(self):
-        self.run(5)
+        self.currentPlayer = self.player5
+        self.run()
         print("jogador ", self.player5.name, " jogou\n")
 
     def play6(self):
-        self.run(6)
+        self.currentPlayer = self.player6
+        self.run()
         print("jogador ", self.player6.name, " jogou\n")
 
     def choose(self, name, decision):
@@ -601,8 +615,8 @@ class Game:
                             if p.newStudents == 0:
                                 onMode = False
 
-    def arrange(self, map_number):
-        self.map_number = map_number
+    def arrange(self):
+        self.map_number = 0
         self.arrangePlayer(1)
         self.arrangePlayer(2)
         self.arrangePlayer(3)
