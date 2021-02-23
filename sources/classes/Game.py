@@ -175,71 +175,6 @@ class Game:
             if self.players == 6:
                 self.player6.rmv_students(e)
 
-        if you >= 3:
-            def middle (n1, n2, n3):
-                if (n1 >= n2 and n1 <= n3) or (n1 <= n2 and n1 >= n3):
-                    return n1
-                elif (n2 >= n1 and n2 <= n3) or (n2 <= n1 and n2 >= n2):
-                    return n2
-                else:
-                    return n3
-
-            middleYou = middle(dice1, dice2, dice3)
-            middleThem = middle(dice4, dice5, dice6)
-
-            if middleThem >= middleYou:
-                self.player1.rmv_students(a)
-                self.player2.rmv_students(a)
-                self.player3.rmv_students(a)
-                if self.players >= 4:
-                    self.player4.rmv_students(a)
-                if self.players >= 5:
-                    self.player5.rmv_students(a)
-                if self.players == 6:
-                    self.player6.rmv_students(a)
-            else:
-                self.player1.rmv_students(e)
-                self.player2.rmv_students(e)
-                self.player3.rmv_students(e)
-                if self.players >= 4:
-                    self.player4.rmv_students(e)
-                if self.players >= 5:
-                    self.player5.rmv_students(e)
-                if self.players == 6:
-                    self.player6.rmv_students(e)
-
-        if you >= 4:
-            def last (n1, n2, n3):
-                if n1 <= n2 and n1 <= n3:
-                    return n1
-                elif n2 <= n1 and n2 <= n3:
-                    return n2
-                else:
-                    return n3
-
-            lastYou = last (dice1, dice2, dice3)
-            lastThem = last (dice4, dice5, dice6)
-            if lastThem >= lastYou:
-                self.player1.rmv_students(a)
-                self.player2.rmv_students(a)
-                self.player3.rmv_students(a)
-                if self.players >= 4:
-                    self.player4.rmv_students(a)
-                if self.players >= 5:
-                    self.player5.rmv_students(a)
-                if self.players == 6:
-                    self.player6.rmv_students(a)
-            else:
-                self.player1.rmv_students(e)
-                self.player2.rmv_students(e)
-                self.player3.rmv_students(e)
-                if self.players >= 4:
-                    self.player4.rmv_students(e)
-                if self.players >= 5:
-                    self.player5.rmv_students(e)
-                if self.players == 6:
-                    self.player6.rmv_students(e)
-
         qtd = self.player1.qtdStudents(e)
         if qtd <= 0:
             return 1
@@ -265,6 +200,7 @@ class Game:
 
         if can == False:
             print ("Você não pode atacar")
+            return
 
         wait = True
         while wait:
@@ -322,8 +258,9 @@ class Game:
                         else:
                             return
                         
-                        win = self.rollDices(you, place)
-
+                        #win = self.rollDices(you, place)
+                        win = 0
+                        wait = False
                         if win == 1:
                             while wait:
                                 self.screen.fill (BLACK)  
@@ -368,6 +305,7 @@ class Game:
                                 elif self.currentPlayer == self.player6:
                                     self.player6.add_classes(place)
                         wait = False
+                        return
                        
     def showInformations(self, place):
 
