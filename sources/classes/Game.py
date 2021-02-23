@@ -5,7 +5,7 @@ from time import sleep
 import random as rand
 from settings import *
 from sprites import *
-from tools import Images, SpriteLists, Places, Goals
+from tools import Images, SpriteLists, Places, Goals, GenerateFGA
 from classes import player, Buttons, Node
 
 class Game:
@@ -65,10 +65,8 @@ class Game:
         self.graphRU = Places.placesRU
         self.graphPredioNovo = Places.placesPredioNovo
         self.graphContainers = Places.placesContainers
-        self.currentGraph = self.graphFGA
-
-        for node in self.graph:
-            text = self.graph[node][0]
+        #self.edges = GenerateFGA.createALL()
+        #self.currentGraph = self.graphFGA
 
     def newBackground (self):
         # initialize all variables and do all the setup for a new game
@@ -93,10 +91,10 @@ class Game:
             map = self.mapRU_data
 
         if self.map_number == 5:
-            map = self.mapCONTAINERS_data
+            map = self.mapPredioNovo_data
 
         if self.map_number == 6:
-            map = self.mapPredioNovo_data
+            map = self.mapCONTAINERS_data
 
         for row, tiles in enumerate(map):
             for col, tile in enumerate(tiles):
@@ -114,9 +112,301 @@ class Game:
         pg.display.update()
         pg.display.flip()
 
+    def rollDices(self, attacker, enemy):
+        dice1 = dice2 = dice3 = dice4 = dice5 = dice6 = 0
+
+        a = attacker
+        e = enemy
+        
+        you = self.currentPlayer.nodeStudents[a]
+        them = self.currentPlayer.nodeStudents[e]
+
+        if you >= 2:
+            dice1 = rand.randint(1, 6)
+            print("Dice1: ", dice1)
+        if you >= 3:
+            dice2 = rand.randint(1, 6)
+            print("Dice2: ", dice2)
+        if you >= 4:
+            dice3 = rand.randint(1, 6)
+            print("Dice3: ", dice3)
+
+        if them >= 1:
+            dice4 = rand.randint(1,6)
+            print("Dice4: ", dice4)
+        if them >= 2:
+            dice5 = rand.randint(1,6)
+            print("Dice5: ", dice5)
+        if them >= 3:
+            dice6 = rand.randint(1,6)
+            print("Dice6: ", dice6)
+
+        def greater (n1, n2, n3):
+            if n1 >= n2 and n1 >= n2:
+               return n1
+            elif n2 >= n1 and n2 >= n3:
+                return n2
+            else:
+                return n3
+
+        greaterYou = greater(dice1, dice2, dice3)
+        print("Seu maior dado: ", greaterYou)
+        greaterThem = greater(dice4, dice5, dice6)
+        print ("Maior dado do inimigo: ", greaterThem)
+
+        if greaterThem >= greaterYou:
+            self.player1.rmv_students(a)
+            self.player2.rmv_students(a)
+            self.player3.rmv_students(a)
+            if self.players >= 4:
+                self.player4.rmv_students(a)
+            if self.players >= 5:
+                self.player5.rmv_students(a)
+            if self.players == 6:
+                self.player6.rmv_students(a)
+        else:
+            self.player1.rmv_students(e)
+            self.player2.rmv_students(e)
+            self.player3.rmv_students(e)
+            if self.players >= 4:
+                self.player4.rmv_students(e)
+            if self.players >= 5:
+                self.player5.rmv_students(e)
+            if self.players == 6:
+                self.player6.rmv_students(e)
+
+        qtd = self.player1.qtdStudents(e)
+        if qtd <= 0:
+            return 1
+
+        else:
+            return 0
+
+    def attack (self, place):
+        can = False
+        n = []
+        button1 = button2 = button3 = button4 = button5 = button6 = (0,0,0,0)
+        n = [0, 0, 0, 0, 0, 0]
+        count = 0
+        self.screen.fill (BLACK)
+        for i in self.graph[place][1]:
+            for j in self.currentPlayer.places:
+                if i == j:
+                    if self.currentPlayer.nodeStudents[i] > 1:
+                        can = True
+                        n[count] = j
+                        count = count + 1
+                        print ("vc pode atacar de ", j)
+
+        if can == False:
+            print ("Você não pode atacar")
+            return
+
+        wait = True
+        while wait:
+            y = 180
+            count = 1
+            if can == True:
+                for i in n:
+                    if i != 0:
+                        places = str(i)
+                        text = self.font.render(("Pode atacar de " + places), False, WHITE)
+                        self.screen.blit(text, [430, y])
+                        if count == 1:
+                            button1 = (430, y, 100, 20)
+                        if count == 2:
+                            button2 = (430, y, 100, 20)
+                        if count == 3:
+                            button3 = (430, y, 100, 20)
+                        if count == 4:
+                            button4 = (430, y, 100, 20)
+                        if count == 5:
+                            button5 = (430, y, 100, 20)
+                        if count == 6:
+                            button6 = (430, y, 100, 20)
+                        y = y + 40
+                        count = count + 1
+            else:
+                text = self.font.render("Não pode atacar", False, WHITE)
+                self.screen.blit(text, [430, y])
+
+            pg.display.update()
+            pg.display.flip()
+            for event in pg.event.get():
+                if event.type == pg.QUIT:
+                    self.quit()
+                if event.type == pg.MOUSEBUTTONUP:
+                    if can == True:
+                        b1 = pg.Rect(button1)
+                        b2 = pg.Rect(button2)
+                        b3 = pg.Rect(button3)
+                        b4 = pg.Rect(button4)
+                        b5 = pg.Rect(button5)
+                        b6 = pg.Rect(button6)
+                        if b1.collidepoint(event.pos):
+                            you = n[0]
+                        elif b2.collidepoint(event.pos):
+                            you = n[1]
+                        elif b3.collidepoint(event.pos):
+                            you = n[2]
+                        elif b4.collidepoint(event.pos):
+                            you = n[3]
+                        elif b5.collidepoint(event.pos):
+                            you = n[4]
+                        elif b6.collidepoint(event.pos):
+                            you = n[5]
+                        else:
+                            return
+                        
+                        #win = self.rollDices(you, place)
+                        win = 0
+                        wait = False
+                        if win == 1:
+                            while wait:
+                                self.screen.fill (BLACK)  
+                                text = self.font.render("Você ganhou!", False, WHITE)
+                                self.screen.blit(text, [430, 180])
+
+                                for p in self.player1.places:
+                                    if p == place:
+                                        self.player1.rmv_classes(place)
+
+                                for p in self.player2.places:
+                                    if p == place:
+                                        self.player2.rmv_classes(place)
+
+                                for p in self.player3.places:
+                                    if p == place:
+                                        self.player3.rmv_classes(place)
+
+                                if self.players >= 4:
+                                    for p in self.player4.places:
+                                        if p == place:
+                                            self.player4.rmv_classes(place)
+                                if self.players >= 5:
+                                    for p in self.player5.places:
+                                        if p == place:
+                                            self.player5.rmv_classes(place)
+                                if self.players == 6:
+                                    for p in self.player6.places:
+                                        if p == place:
+                                            self.player6.rmv_classes(place)
+
+                                if self.currentPlayer == self.player1:
+                                    self.player1.add_classes(place)
+                                elif self.currentPlayer == self.player2:
+                                    self.player2.add_classes(place)
+                                elif self.currentPlayer == self.player3:
+                                    self.player3.add_classes(place)
+                                elif self.currentPlayer == self.player4:
+                                    self.player4.add_classes(place)
+                                elif self.currentPlayer == self.player5:
+                                    self.player5.add_classes(place)
+                                elif self.currentPlayer == self.player6:
+                                    self.player6.add_classes(place)
+                        wait = False
+                        return
+                       
+    def showInformations(self, place):
+
+        can = False
+
+        if self.currentGraph == self.graphUAC2:
+            place = place + 12
+        if self.currentGraph == self.graphUED:
+            place = place + 21
+
+        if self.currentGraph == self.graphRU:
+            place = place + 28
+
+        if self.currentGraph == self.graphPredioNovo:
+            place = place + 34
+
+        if self.currentGraph == self.graphContainers:
+            place = place + 38
+
+        for p in self.player1.places:
+            if p == place:
+                self.owner = self.player1
+
+        for p in self.player2.places:
+            if p == place:
+                self.owner = self.player2
+
+        for p in self.player3.places:
+            if p == place:
+                self.owner = self.player3
+
+        if self.players == 4:
+            for p in self.player4.places:
+                if p == place:
+                    self.owner = self.player4
+
+        if self.players == 5:
+            for p in self.player5.places:
+                if p == place:
+                    self.owner = self.player5
+
+        if self.players == 6:
+            for p in self.player6.places:
+                if p == place:
+                    self.owner = self.player6
+
+        #print (place)
+        #print (self.owner.name)
+        students = self.owner.nodeStudents[place]
+        students = str(students)
+
+        wait = True
+        while wait:
+            rect = pg.Rect(400, 150, 200, 200)
+            pg.draw.rect(self.screen, BLACK, rect)
+            text = self.font.render(("Informações") , True, WHITE)
+            self.screen.blit(text, [410, 160])
+
+            if self.owner == self.currentPlayer:
+                text = self.font.render(("Seu território") , True, WHITE)
+                text2 = self.font.render("Não pode atacar", True, WHITE)
+            else:
+                text = self.font.render(("Território de " + self.owner.name) , True, WHITE)
+                text2 = self.font.render("Deseja atacar?", True, WHITE)
+                no = self.font.render("Não", True, WHITE)
+                buttonNo = pg.Rect (410,250,25,20)
+                pg.draw.rect(self.screen, RED, buttonNo)
+                self.screen.blit(no, [410, 250])
+                yes = self.font.render("Sim", True, WHITE)
+                buttonYes = pg.Rect(450,250,25,20)
+                pg.draw.rect(self.screen, RED, buttonYes)
+                self.screen.blit(yes, [450, 250])
+            
+            text3 = self.font.render(("Alunos: " + students), True, WHITE)
+            self.screen.blit(text, [410, 180])
+            self.screen.blit(text2, [410, 200])
+            self.screen.blit(text3, [410, 300])
+            pg.display.update()
+            pg.display.flip()
+            for event in pg.event.get():
+                if event.type == pg.QUIT:
+                    self.quit()
+                if event.type == pg.MOUSEBUTTONUP:
+                    wait = False
+                    if self.owner != self.currentPlayer:
+                        if buttonYes.collidepoint(event.pos):
+                            #self.attack(place)
+                            can = True
+                            print ("ataca")
+                        if buttonNo.collidepoint(event.pos):
+                            print ("n ataca")
+                            can = False
+        if can == True:
+            self.attack(place)
+        return
+
     def events(self):
         buttonFinish = pg.Rect(800, 450, 100, 20)
         #pg.draw.rect(self.screen, RED, buttonFinish)
+        stay = False
+        wait = True
         pg.display.flip()
         pg.display.update()
         for event in pg.event.get():
@@ -130,7 +420,9 @@ class Game:
                     for places in self.currentGraph:
                         button = pg.Rect(self.currentGraph[places][2])
                         if button.collidepoint(event.pos):
+                            stay = True
                             print (self.currentGraph[places][0])
+
                             if self.map_number == 0:
                                 self.map_number = places
                                 if places == 1:
@@ -142,30 +434,117 @@ class Game:
                                 elif places == 4:
                                     self.currentGraph = self.graphRU
                                 elif places == 5:
-                                    self.currentGraph = self.graphContainers
-                                else:
                                     self.currentGraph = self.graphPredioNovo
+                                else:
+                                    self.currentGraph = self.graphContainers
 
                             elif self.map_number == 1:
-                                if places == 3 or places == 4:
-                                    self.map_number = 2
-                                    self.currentGraph = self.graphUAC2
+                                if places == 'a':
+                                    places = 10
+                                if places == 'b':
+                                    places = 11
                                 if places == 'c':
-                                    self.map_number = 0
-                                    self.currentGraph = self.graphFGA
+                                    places = 12
+                                if places == 3 or places == 4:
+                                    while wait:
+                                        text = self.font.render("Você quer ir para o segundo andar?" , False, RED)
+                                        self.screen.blit(text, MOVE)
+                                        no = self.font.render("Não" , False, WHITE)
+                                        self.screen.blit(no, NO)
+                                        yes = self.font.render("Sim" , False, WHITE)
+                                        self.screen.blit(yes, YES)
+                                        buttonYes = pg.Rect(500, 330, 50, 20)
+                                        buttonNo = pg.Rect(600,330,50,20)
+                                        #pg.draw.rect(self.screen, RED, buttonYes)
+                                        #pg.draw.rect(self.screen, RED, buttonNo)
+                                        pg.display.update()
+                                        pg.display.flip()
+                                        for e in pg.event.get():
+                                            if e.type == pg.QUIT:
+                                                self.quit()
+
+                                            if e.type == pg.MOUSEBUTTONUP and buttonYes.collidepoint(e.pos):
+                                                wait = False
+                                                self.map_number = 2
+                                                self.currentGraph = self.graphUAC2
+                                            elif e.type == pg.MOUSEBUTTONUP and buttonNo.collidepoint(e.pos):
+                                                n = places
+                                                self.showInformations(n)
+                                                wait = False
+                                else:
+                                    n = places
+                                    self.showInformations(n)
 
                             elif self.map_number == 2:
-                                if places == 8 or places == 9:
-                                    self.map_number = 1
-                                    self.currentGraph = self.graphUAC1
+                                if places == 9 or places == 8:
+                                    while wait:
+                                        text = self.font.render("Você quer ir para o primeiro andar?" , False, RED)
+                                        self.screen.blit(text, MOVE)
+                                        no = self.font.render("Não" , False, WHITE)
+                                        self.screen.blit(no, NO)
+                                        yes = self.font.render("Sim" , False, WHITE)
+                                        self.screen.blit(yes, YES)
+                                        buttonYes = pg.Rect(500, 330, 50, 20)
+                                        buttonNo = pg.Rect(600,330,50,20)
+                                        #pg.draw.rect(self.screen, RED, buttonYes)
+                                        #pg.draw.rect(self.screen, RED, buttonNo)
+                                        pg.display.update()
+                                        pg.display.flip()
+                                        for e in pg.event.get():
+                                            if e.type == pg.QUIT:
+                                                self.quit()
+
+                                            if e.type == pg.MOUSEBUTTONUP and buttonYes.collidepoint(e.pos):
+                                                wait = False
+                                                self.map_number = 1
+                                                self.currentGraph = self.graphUAC1
+                                            elif e.type == pg.MOUSEBUTTONUP and buttonNo.collidepoint(e.pos):
+                                                n = places
+                                                self.showInformations(n)
+                                                wait = False
+                                else:
+                                    n = places
+                                    self.showInformations(n)
 
                             elif self.map_number == 3:
-                                if places == 6 or places == 7:
-                                    self.map_number = 0
-                                    self.currentGraph = self.graphFGA
+                                if places == 7:
+                                    while wait:
+                                        text = self.font.render("Você quer ir para os containers?" , False, RED)
+                                        self.screen.blit(text, MOVE)
+                                        no = self.font.render("Não" , False, WHITE)
+                                        self.screen.blit(no, NO)
+                                        yes = self.font.render("Sim" , False, WHITE)
+                                        self.screen.blit(yes, YES)
+                                        buttonYes = pg.Rect(500, 330, 50, 20)
+                                        buttonNo = pg.Rect(600,330,50,20)
+                                        #pg.draw.rect(self.screen, RED, buttonYes)
+                                        #pg.draw.rect(self.screen, RED, buttonNo)
+                                        pg.display.update()
+                                        pg.display.flip()
+                                        for e in pg.event.get():
+                                            if e.type == pg.QUIT:
+                                                self.quit()
 
+                                            if e.type == pg.MOUSEBUTTONUP and buttonYes.collidepoint(e.pos):
+                                                wait = False
+                                                self.map_number = 6
+                                                self.currentGraph = self.graphContainers
+                                            elif e.type == pg.MOUSEBUTTONUP and buttonNo.collidepoint(e.pos):
+                                                n = places
+                                                self.showInformations(n)
+                                                wait = False
+                                else:
+                                    n = places
+                                    self.showInformations(n)
+                            else:
+                                n = places
+                                self.showInformations(n)
 
                             return
+
+                    if stay == False:
+                        self.map_number = 0
+                        self.currentGraph = self.graphFGA
     
     def run(self):
         self.onMode = True
@@ -179,31 +558,43 @@ class Game:
         sys.exit()
 
     def play1(self):
+        self.map_number = 0
+        self.currentGraph = self.graphFGA
         self.currentPlayer = self.player1
         self.run()
         print("jogador ", self.player1.name, " jogou\n")
 
     def play2(self):
+        self.map_number = 0
+        self.currentGraph = self.graphFGA
         self.currentPlayer = self.player2
         self.run()
         print("jogador ", self.player2.name, " jogou\n")
 
     def play3(self):
+        self.map_number = 0
+        self.currentGraph = self.graphFGA
         self.currentPlayer = self.player3
         self.run()
         print("jogador ", self.player3.name, " jogou\n")
 
     def play4(self):
+        self.map_number = 0
+        self.currentGraph = self.graphFGA
         self.currentPlayer = self.player4
         self.run()
         print("jogador ", self.player4.name, " jogou\n")
 
     def play5(self):
+        self.map_number = 0
+        self.currentGraph = self.graphFGA
         self.currentPlayer = self.player5
         self.run()
         print("jogador ", self.player5.name, " jogou\n")
 
     def play6(self):
+        self.map_number = 0
+        self.currentGraph = self.graphFGA
         self.currentPlayer = self.player6
         self.run()
         print("jogador ", self.player6.name, " jogou\n")
@@ -608,7 +999,16 @@ class Game:
                             #teste = p.places[i]
                             #text = self.graph[teste][0]
                             p.newStudents = p.newStudents - 1
-                            p.add_students(position)
+                            self.player1.add_students(position)
+                            self.player2.add_students(position)
+                            self.player3.add_students(position)
+                            if self.players == 4:
+                                self.player4.add_students(position)
+                            if self.players == 5:
+                                self.player5.add_students(position)
+                            if self.players == 6:
+                                self.player6.add_students(position)
+
                             pg.display.flip()
                             pg.display.update()
                             self.printPlayer(player)

@@ -17,9 +17,9 @@ while True:
 	g.play1()
 	g.play2()
 	g.play3()
-"""	if g.players >= 4:
+	if g.players >= 4:
 	   	g.play4()
-	    if g.players >= 5:
-	    	g.play5()
-	    	if g.players == 6:
-	    		g.play6()"""
+	if g.players >= 5:
+	    g.play5()
+	if g.players == 6:
+	    g.play6()
