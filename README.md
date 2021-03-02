@@ -36,6 +36,11 @@ pip3 install pygame
 
 ## Uso 
 
-Para uso do projeto basta rodar o projeto a partir a partir da pasta do projeto, não a partir da pasta sources, utilizando o VSCode ou a linha de comando. Rodar o projeto a partir de uma pasta diferente da pasta do projeto causa problemas de pathing.
+Para uso do projeto basta rodar o projeto a partir a partir da pasta do projeto, não a partir da pasta sources, utilizando a linha de comando, é necessário passar o nome dos players. Rodar o projeto a partir de uma pasta diferente da pasta do projeto causa problemas de pathing.
+```
+python3 sources/main.py julio sara kathlyn mauricio
+```
+
+
 
 
